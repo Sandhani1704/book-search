@@ -17,7 +17,7 @@ function onSubmit(e) {
   
 
   return (
-    <div>
+    <div className="search-form__container">
       <form
         className="search-form"
         name="search-form"
@@ -45,7 +45,7 @@ function onSubmit(e) {
       <div className="filter-container">
       <div className="field">
         <label className="label">Categories</label>
-        <select name="categories" value={state.categories} onChange={onChange}>
+        <select className="select" name="categories" value={state.categories} onChange={onChange}>
           <option value="all">all</option>
           <option value="Art">art</option>
           <option value="Biography">biography</option>
@@ -57,7 +57,7 @@ function onSubmit(e) {
       </div>
       <div className="field">
         <label className="label">Sorting by</label>
-        <select name="sorting" value={state.sorting} onChange={onChange}>
+        <select className="select" name="sorting" value={state.sorting} onChange={onChange}>
           <option value="relevance">relevance</option>
           <option value="newest">newest</option>
         </select>

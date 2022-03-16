@@ -48,7 +48,6 @@ function App() {
         setPreloader(false);
         setFoundBooks(data.items);
         setTotalFoundBooks(data.totalItems);
-        //setKeyword(keyword);
         setNotFound(false);
 
         if (data.items.length === 0) {
@@ -65,8 +64,6 @@ function App() {
   }
 
   console.log(foundBooks);
-
-  //console.log(keyword);
 
   React.useEffect(() => {
     if (foundBooks?.length <= totalFoundBooks) {
@@ -93,8 +90,6 @@ function App() {
   }
 
   function handleSubmitKeyword(keyword, state, startIndex, maxResult) {
-    // e.preventDefault();
-    //setKeyword(keyword)
     if (!keyword) {
       setSearchErrorMessage("Нужно ввести ключевое слово");
       return;
@@ -134,7 +129,6 @@ function App() {
           foundBooks={foundBooks}
           onChange={onChange}
           state={state.categories}
-          // handleChangeKeyword={handleChangeKeyword}
           startIndex={startIndex}
           maxResult={maxResult}
           searchErrorMessage={searchErrorMessage}
