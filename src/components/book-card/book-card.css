@@ -1,0 +1,173 @@
+.book-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 2px;
+  background: #ffffff;
+  width: 100%;
+  /* min-height: 500px; */
+  overflow: hidden;
+  position: relative;
+  background-color: #f5f6f7;
+}
+
+.book-card__image-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 30px;
+}
+.book-card__source-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.book-card__image {
+  display: flex;
+  /* width: 50%; */
+  max-width: 200px;
+  width: 100%;
+  height: 250px;
+  padding-left: 10px;
+  padding-right: 10px;
+  justify-content: center;
+  margin: auto;
+  margin-top: 30px;
+  object-fit: cover;
+}
+
+.book-card__tag {
+  margin-top: 24px;
+  margin-left: 24px;
+  padding: 8px 12px;
+  font-family: "Roboto", Arial, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  color: #000000;
+  background: #fff;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.book-card__date {
+  font-family: "Source Sans Pro", Arial, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  padding: 20px 24px 12px;
+  color: #b6bcbf;
+  display: flex;
+}
+
+.book-card__title {
+  font-family: "Roboto Slab", Arial, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 30px;
+  padding: 0 24px;
+  color: #1a1b22;
+  margin: 0;
+}
+
+.book-card__description {
+  font-family: "Roboto", Arial, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  padding: 16px 24px 18px;
+  margin: 0;
+  color: #1a1b22;
+}
+
+.book-card__source {
+  font-family: "Roboto Slab", Arial, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0 24px 24px;
+  color: #b6bcbf;
+}
+
+@media screen and (max-width: 920px) {
+  .book-card__title {
+    font-size: 22px;
+    line-height: 24px;
+    padding: 0 16px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .book-card__tag {
+    margin-top: 8px;
+    margin-left: 8px;
+    font-size: 12px;
+  }
+
+  .book-card__save-button {
+    margin-top: 8px;
+    margin-right: 8px;
+  }
+
+  .book-card__delete-button {
+    margin-top: 8px;
+    margin-right: 8px;
+  }
+
+  .book-card__date {
+    padding: 16px 16px 12px;
+    margin: 0;
+  }
+
+  .book-card__description {
+    padding: 10px 16px 12px;
+  }
+
+  .book-card__source {
+    padding: 0 16px 16px;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .book-card__tag {
+    margin-top: 16px;
+    margin-left: 16px;
+    font-size: 14px;
+  }
+
+  .book-card__save-button {
+    margin-top: 16px;
+    margin-right: 16px;
+  }
+
+  .book-card__delete-button {
+    margin-top: 16px;
+    margin-right: 16px;
+  }
+
+  .book-card__date {
+    padding: 16px 16px 10px;
+  }
+
+  .book-card__title {
+    line-height: 26px;
+    padding: 0 16px;
+  }
+
+  .book-card__description {
+    padding: 10px 16px 8px;
+  }
+}

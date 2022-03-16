@@ -1,0 +1,19 @@
+.books-card-list {
+	display: grid;
+	padding: 0;
+	gap: 40px 40px;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+@media screen and (max-width:768px) {
+	.books-card-list {
+		gap: 20px 20px;
+	}
+}
+
+@media screen and (max-width:700px) {
+	.books-card-list {
+		grid-template-columns: 1fr;
+		gap: 10px;
+	}
+}
