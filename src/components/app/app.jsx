@@ -24,7 +24,19 @@ function App() {
   const [sortByDate, setSortByDate] = React.useState(false);
   const maxResult = 30;
 
-  const onChange = (e) => {
+  const onChangeCategories = (e) => {
+    //setSortByDate(state.sorting === "relevance" ? false : true);
+
+    const { name, value } = e.target;
+
+    setState({
+      ...state,
+      [name]: value,
+    });
+  };
+
+  const onChangeSorting = (e) => {
+    setSortByDate(!sortByDate);
     const { name, value } = e.target;
 
     setState({
@@ -98,28 +110,6 @@ function App() {
     setSearchErrorMessage("");
   }
 
-  // Сортировка книг по дате;
-  React.useEffect(() => {
-    setSortByDate(state.sorting === "relevance" ? false : true);
-
-    function sort() {
-      if (foundBooks?.length === 0) return;
-      if (!sortByDate) {
-        setFoundBooks(foundBooks);
-      } else {
-        let booksToSort = [...foundBooks];
-        booksToSort.sort((book1, book2) => {
-          return book2.volumeInfo.publishedDate?.localeCompare(
-            book1.volumeInfo.publishedDate
-          );
-        });
-        setFoundBooks(booksToSort);
-      }
-    }
-
-    sort();
-  }, [state.sorting, foundBooks, sortByDate]);
-
   return (
     <div className="app">
       <div className="header-image">
@@ -127,8 +117,10 @@ function App() {
         <SearchForm
           handleSearchBooks={handleSearchBooks}
           foundBooks={foundBooks}
-          onChange={onChange}
-          state={state.categories}
+          onChangeCategories={onChangeCategories}
+          onChangeSorting={onChangeSorting}
+          categories={state.categories}
+          sorting={state.sorting}
           startIndex={startIndex}
           maxResult={maxResult}
           searchErrorMessage={searchErrorMessage}
@@ -140,6 +132,7 @@ function App() {
           handleShowButtonClick={handleShowButtonClick}
           showButton={showButton}
           totalFoundBooks={totalFoundBooks}
+          sortByDate={sortByDate}
         />
         {preloader && <Preloader />}
         {serverError && <ServerError />}

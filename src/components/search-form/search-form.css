@@ -95,6 +95,13 @@
   text-align: center;
 }
 
+.filter-container {
+  display: flex;
+  margin: auto;
+  gap: 15px;
+  padding-bottom: 80px;
+}
+
 .label {
   font-family: "Roboto", Arial, sans-serif;
   font-size: 18px;
@@ -109,11 +116,34 @@
   font-family: "Roboto", Arial, sans-serif;
   font-size: 18px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 24px;
   color: black;
   padding-right: 10px;
   width: 150px;
+}
+
+.field {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+.field select::placeholder,
+.field textarea::placeholder {
+  font-weight: normal;
+  font-family: "JetBrains Mono";
+  font-size: 18px;
+  line-height: 21px;
+  color: #929292;
+  width: 300px;
+  font-size: 22px;
+  line-height: 25px;
+}
+
+.field option {
+  font-size: 18px;
+  line-height: 21px;
 }
 
 @media screen and (max-width: 804px) {
@@ -154,6 +184,9 @@
     margin: 0;
     margin-top: 16px;
   }
+  .filter-container {
+    flex-direction: column;
+  }
 }
 
 @media screen and (max-width: 482px) {
@@ -163,33 +196,4 @@
   .search-form__input-container {
     margin-top: 122px;
   }
-}
-.filter-container {
-  display: flex;
-  margin: auto;
-  gap: 15px;
-}
-
-.field {
-  position: relative;
-  display: flex;
-  width: 100%;
-  padding-bottom: 80px;
-}
-
-.field select::placeholder,
-.field textarea::placeholder {
-  font-weight: normal;
-  font-family: "JetBrains Mono";
-  font-size: 18px;
-  line-height: 21px;
-  color: #929292;
-  width: 300px;
-  font-size: 22px;
-  line-height: 25px;
-}
-
-.field option {
-  font-size: 18px;
-  line-height: 21px;
 }

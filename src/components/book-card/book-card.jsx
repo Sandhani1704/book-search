@@ -16,12 +16,12 @@ function BookCard({book}) {
         <img className="book-card__image" src={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : ''} alt={book.volumeInfo.title} />
           {/* </a> */}
         </div>
-        <p className="book-card__description">{book.volumeInfo.categories}</p>
+        <p className="book-card__description">{book.volumeInfo.categories && book.volumeInfo.categories[0] }</p>
         <h3 className="book-card__title">{book.volumeInfo.title}</h3>
         
       </div>
 
-      <p className="book-card__source">{book.volumeInfo.authors}</p>
+      <p className="book-card__source">{book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : ''}</p>
     </div>
   );
 }

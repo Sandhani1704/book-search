@@ -1,7 +1,7 @@
 import React from "react";
 import "./search-form.css";
 
-function SearchForm({ onChange, state, searchErrorMessage, handleSubmitKeyword, startIndex, maxResult }) {
+function SearchForm({ onChangeCategories, onChangeSorting, categories, sorting, searchErrorMessage, handleSubmitKeyword, startIndex, maxResult }) {
   const [keyword, setKeyword] = React.useState("");
 console.log(keyword)
 
@@ -11,7 +11,7 @@ function handleChangeKeyword(e) {
 
 function onSubmit(e) {
   e.preventDefault();
-  handleSubmitKeyword(keyword, state, startIndex, maxResult);
+  handleSubmitKeyword(keyword, categories, startIndex, maxResult);
 }
 
   
@@ -45,7 +45,7 @@ function onSubmit(e) {
       <div className="filter-container">
       <div className="field">
         <label className="label">Categories</label>
-        <select className="select" name="categories" value={state.categories} onChange={onChange}>
+        <select className="select" name="categories" value={categories} onChange={onChangeCategories}>
           <option value="all">all</option>
           <option value="Art">art</option>
           <option value="Biography">biography</option>
@@ -57,7 +57,7 @@ function onSubmit(e) {
       </div>
       <div className="field">
         <label className="label">Sorting by</label>
-        <select className="select" name="sorting" value={state.sorting} onChange={onChange}>
+        <select className="select" name="sorting" value={sorting} onChange={onChangeSorting}>
           <option value="relevance">relevance</option>
           <option value="newest">newest</option>
         </select>
