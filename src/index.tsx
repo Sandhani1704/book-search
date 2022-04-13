@@ -22,7 +22,7 @@ const store = createStore(rootReducer, enhancer);
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
+      <Router basename="/book-search">
         <App />
       </Router>
     </Provider>
