@@ -1,0 +1,109 @@
+.card {
+  padding: 60px 50px;
+}
+
+.card__container {
+  background-color: #fff;
+  box-sizing: border-box;
+  padding: 0 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card__pic {
+  display: flex;
+  max-width: 380px;
+  width: 100%;
+  object-fit: contain;
+  margin-right: 20px;
+}
+
+.card__details {
+  width: calc(100% - 173px - 60px);
+}
+
+.card__categories {
+  color: #b6bcbf;
+}
+.card__authors {
+  color: #b6bcbf;
+}
+
+.card__title {
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  margin: 10px 0 0;
+}
+
+.card__subtitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.1;
+  margin-bottom: 2px;
+  margin: 10px 0 0;
+}
+
+@media screen and (max-width: 700px) {
+  .card__pic {
+    max-width: 250px;
+  }
+  .card__title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.1;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .card__pic {
+    max-width: 200px;
+  }
+  .card__title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.1;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .card__container {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .card__pic {
+    margin: 0 auto;
+  }
+
+  .card__details {
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+.button {
+  display: block;
+  box-sizing: border-box;
+  border: 2px solid #000;
+  background-color: transparent;
+  color: #000;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: grey;
+}
+
+.button_type_back {
+  margin-top: 24px;
+  width: 121px;
+  height: 56px;
+  background-image: url("data:image/svg+xml,%3Csvg width='61' height='16' viewBox='0 0 61 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.292889 7.29289C-0.0976333 7.68341 -0.0976334 8.31658 0.292889 8.7071L6.65685 15.0711C7.04737 15.4616 7.68054 15.4616 8.07106 15.0711C8.46159 14.6805 8.46159 14.0474 8.07106 13.6568L2.41421 7.99999L8.07106 2.34314C8.46159 1.95262 8.46159 1.31945 8.07106 0.928928C7.68054 0.538403 7.04738 0.538403 6.65685 0.928927L0.292889 7.29289ZM61 7L0.999996 6.99999L0.999996 8.99999L61 9L61 7Z' fill='%23000000'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.button_type_back:hover {
+  background-image: url("data:image/svg+xml,%3Csvg width='61' height='16' viewBox='0 0 61 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.292889 7.29289C-0.0976333 7.68341 -0.0976334 8.31658 0.292889 8.7071L6.65685 15.0711C7.04737 15.4616 7.68054 15.4616 8.07106 15.0711C8.46159 14.6805 8.46159 14.0474 8.07106 13.6568L2.41421 7.99999L8.07106 2.34314C8.46159 1.95262 8.46159 1.31945 8.07106 0.928928C7.68054 0.538403 7.04738 0.538403 6.65685 0.928927L0.292889 7.29289ZM61 7L0.999996 6.99999L0.999996 8.99999L61 9L61 7Z' fill='%2303A751'/%3E%3C/svg%3E");
+}

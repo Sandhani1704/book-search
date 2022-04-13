@@ -2,17 +2,21 @@ import React from 'react';
 import './main.css';
 import BookCard from '../book-card/book-card';
 import BookCardList from '../book-card-list/book-card-list';
+import Preloader from "../preloader/preloader";
+import { useSelector, useDispatch } from "react-redux";
+import { SORT_BOOKS, SHOW_BOOK_PAGE_INFO } from "../../services/actions/books";
 
-function Main({ foundBooks, showButton, handleShowButtonClick, totalFoundBooks, sortByDate }) {
-    const [sortedBooks, setSortedBooks] = React.useState([]);
+function Main({ showButton, handleShowButtonClick }) {
+  const dispatch = useDispatch();
+  const { totalFoundBooks, foundBooks, loadMoreBooksRequest, sortedBooks, sortByDate } = useSelector((store) => store.books);
 
-    // Сортировка книг по дате;
+  // Сортировка книг по дате;
   React.useEffect(() => {
-    
+
     function sort() {
       if (foundBooks?.length === 0) return;
       if (!sortByDate) {
-        setSortedBooks(foundBooks);
+        dispatch({ type: SORT_BOOKS, payload: foundBooks });
       } else {
         let booksToSort = [...foundBooks];
         booksToSort.sort((book1, book2) => {
@@ -20,29 +24,36 @@ function Main({ foundBooks, showButton, handleShowButtonClick, totalFoundBooks, 
             book1.volumeInfo.publishedDate
           );
         });
-        setSortedBooks(booksToSort);
+        dispatch({ type: SORT_BOOKS, payload: booksToSort });
       }
     }
 
     sort();
-  }, [sortByDate, foundBooks]);
+  }, [dispatch, sortByDate, foundBooks]);
 
-    return (
-        <main className={`main ${foundBooks?.length > 0 ? '' : 'main_none'}`}>
-            <h1 className='main__title'>{`Found ${totalFoundBooks} results`}</h1>
-            <BookCardList >
-                {sortedBooks?.map((book, key) => (
-                    <BookCard
-                        book={book}
-                        key={key}
-                    />
-                ))
-                }
-            </BookCardList>
-            {showButton && <button className='main__showmore-button' onClick={handleShowButtonClick}>Load more</button>}
+  const onBookClick = (BookInfo) => {
+    dispatch({ type: SHOW_BOOK_PAGE_INFO, BookInfo });
+  };
 
-        </main>
-    )
+  return (
+    <main className={`main ${foundBooks?.length > 0 ? '' : 'main_none'}`}>
+      <h1 className='main__title'>{`Found ${totalFoundBooks} results`}</h1>
+      <BookCardList >
+        {sortedBooks?.map((book, key) => (
+          <BookCard
+            book={book}
+            key={key}
+            sortedBooks={sortedBooks}
+            onBookClick={onBookClick}
+          />
+        ))
+        }
+      </BookCardList>
+      {loadMoreBooksRequest && <Preloader />}
+      {showButton && <button className='main__showmore-button' onClick={handleShowButtonClick}>Load more</button>}
+
+    </main>
+  )
 }
 
 export default Main;

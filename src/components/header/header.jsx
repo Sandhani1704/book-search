@@ -1,11 +1,13 @@
 import React from "react";
-// import { Link } from "react-router-dom";
 import "./header.css";
+import { Link } from 'react-router-dom';
 
 function Header() {
   return (
     <header className="header">
-      <p className="header__nav-logo">BooksExplorer</p>
+      <Link to="/" className="header__nav-logo">
+        BooksExplorer
+      </Link>
     </header>
   );
 }

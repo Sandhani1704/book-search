@@ -8,11 +8,7 @@ export const getBooks = (keyword, category, startIndex, maxResult) => {
     headers: {
       "Accept": "application/json",
     },
-  })
-    .then((res) => {
-      if (res.status === 200) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status}`);
-    });
+  }).then((res) => {
+    return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+  });
 }

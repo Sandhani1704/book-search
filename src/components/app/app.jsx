@@ -3,17 +3,22 @@ import React from "react";
 import Header from "../header/header";
 import SearchForm from "../search-form/search-form";
 import Main from "../main/main";
-import Preloader from "../preloader/preloader";
 import ServerError from "../server-error/server-error";
 import NotFound from "../not-found/not-found";
-import * as books from "../../utils/Api";
+import { Route, Switch, useLocation, useHistory } from "react-router-dom";
+import BookPage from "../../pages/book-page/book-page";
+import Preloader from "../preloader/preloader";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getFoundBooks,
+  loadMoreBooks,
+  CHANGE_SORT_BY_DATE,
+} from "../../services/actions/books";
 
 function App() {
-  const [preloader, setPreloader] = React.useState(false);
-  const [serverError, setServerError] = React.useState(false);
+  const location = useLocation();
+  const history = useHistory();
   const [notFound, setNotFound] = React.useState(false);
-  const [foundBooks, setFoundBooks] = React.useState([]);
-  const [totalFoundBooks, setTotalFoundBooks] = React.useState("");
   const [state, setState] = React.useState({
     categories: "all",
     sorting: "relevance",
@@ -21,12 +26,18 @@ function App() {
   const [startIndex, setStartIndex] = React.useState(0);
   const [showButton, setShowButton] = React.useState(false);
   const [searchErrorMessage, setSearchErrorMessage] = React.useState("");
-  const [sortByDate, setSortByDate] = React.useState(false);
   const maxResult = 30;
+  const dispatch = useDispatch();
+  const {
+    foundBooks,
+    booksRequest,
+    booksFailed,
+    totalFoundBooks,
+    keyword,
+    sortByDate,
+  } = useSelector((store) => store.books);
 
   const onChangeCategories = (e) => {
-    //setSortByDate(state.sorting === "relevance" ? false : true);
-
     const { name, value } = e.target;
 
     setState({
@@ -36,7 +47,7 @@ function App() {
   };
 
   const onChangeSorting = (e) => {
-    setSortByDate(!sortByDate);
+    dispatch({ type: CHANGE_SORT_BY_DATE, payload: !sortByDate });
     const { name, value } = e.target;
 
     setState({
@@ -45,37 +56,11 @@ function App() {
     });
   };
 
-  console.log(state.categories);
-
-  // обработчик поиска книг
-  function handleSearchBooks(keyword, state, startIndex, maxResult) {
-    setPreloader(true);
-    setNotFound(false);
-    setServerError(false);
-    return books
-      .getBooks(keyword, state, startIndex, maxResult)
-      .then((data) => {
-        console.log(data);
-
-        setPreloader(false);
-        setFoundBooks(data.items);
-        setTotalFoundBooks(data.totalItems);
-        setNotFound(false);
-
-        if (data.items.length === 0) {
-          setNotFound(true);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setServerError(true);
-      })
-      .finally(() => {
-        setPreloader(false);
-      });
-  }
-
-  console.log(foundBooks);
+  React.useEffect(() => {
+    if (foundBooks.length === 0) {
+      setNotFound(true);
+    }
+  }, [foundBooks]);
 
   React.useEffect(() => {
     if (foundBooks?.length <= totalFoundBooks) {
@@ -85,38 +70,39 @@ function App() {
     }
   }, [foundBooks, totalFoundBooks]);
 
-  function handleShowButtonClick(keyword) {
+  function handleShowButtonClick() {
     const newStartIndex = startIndex + 1 * maxResult;
-    setPreloader(true);
-    books
-      .getBooks(keyword, state.categories, newStartIndex, maxResult)
-      .then((newBooks) => {
-        console.log(newBooks);
-
-        setPreloader(false);
-        setFoundBooks([...foundBooks, ...newBooks.items]);
-        setTotalFoundBooks(newBooks.totalItems);
-
-        setStartIndex(newStartIndex);
-      });
+    dispatch(
+      loadMoreBooks(keyword, state.categories, newStartIndex, maxResult)
+    );
+    setStartIndex(newStartIndex);
   }
 
+  // обработчик поиска книг
   function handleSubmitKeyword(keyword, state, startIndex, maxResult) {
+    localStorage.removeItem("booksItems");
     if (!keyword) {
       setSearchErrorMessage("Нужно ввести ключевое слово");
       return;
     }
-    handleSearchBooks(keyword, state, startIndex, maxResult);
+    if (location.pathname !== "/") {
+      history.push("/");
+    }
+    dispatch(getFoundBooks(keyword, state, startIndex, maxResult));
     setSearchErrorMessage("");
   }
+
+  React.useEffect(() => {
+    if (location.pathname !== "/") {
+      history.push("/");
+    }
+  }, []);
 
   return (
     <div className="app">
       <div className="header-image">
         <Header />
         <SearchForm
-          handleSearchBooks={handleSearchBooks}
-          foundBooks={foundBooks}
           onChangeCategories={onChangeCategories}
           onChangeSorting={onChangeSorting}
           categories={state.categories}
@@ -125,19 +111,26 @@ function App() {
           maxResult={maxResult}
           searchErrorMessage={searchErrorMessage}
           handleSubmitKeyword={handleSubmitKeyword}
-          sortByDate={sortByDate}
         />
-        <Main
-          foundBooks={foundBooks}
-          handleShowButtonClick={handleShowButtonClick}
-          showButton={showButton}
-          totalFoundBooks={totalFoundBooks}
-          sortByDate={sortByDate}
-        />
-        {preloader && <Preloader />}
-        {serverError && <ServerError />}
-        {notFound && <NotFound />}
       </div>
+      <Switch>
+        <Route exact path="/">
+          {!booksRequest ? (
+            <Main
+              handleShowButtonClick={handleShowButtonClick}
+              showButton={showButton}
+              sortByDate={sortByDate}
+            />
+          ) : (
+            Preloader
+          )}
+        </Route>
+        <Route exact path="/book/:id">
+          <BookPage />
+        </Route>
+        {booksFailed && <ServerError />}
+        {notFound && <NotFound />}
+      </Switch>
     </div>
   );
 }
